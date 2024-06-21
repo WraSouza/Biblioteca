@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Biblioteca.Core.Enums;
 
 namespace Biblioteca.Core.Entities
 {
@@ -14,11 +10,13 @@ namespace Biblioteca.Core.Entities
             Autor = autor;
             ISBN = iSBN;
             AnoPublicacao = anoPublicacao;
+            StatusBook = BookStatusEnum.Available;
         }
 
         public string? Titulo { get; private set; }
         public string? Autor { get; private set; }
         public string? ISBN { get; private set; }
         public int AnoPublicacao { get; private set; }
+        public BookStatusEnum StatusBook { get; private set; }
     }
 }

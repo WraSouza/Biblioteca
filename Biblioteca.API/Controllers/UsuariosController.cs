@@ -24,5 +24,12 @@ namespace Biblioteca.API.Controllers
             return CreatedAtAction(nameof(GetById), new { id = model.Id }, model);
         }
 
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            //Buscar, Se não Existir, retorna NotFound
+            return NoContent();
+        }
+
     }
 }

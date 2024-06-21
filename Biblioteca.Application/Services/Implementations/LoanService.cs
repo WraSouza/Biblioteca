@@ -3,11 +3,6 @@ using Biblioteca.Application.Services.Interfaces;
 using Biblioteca.Application.ViewModels;
 using Biblioteca.Core.Entities;
 using Biblioteca.Infrastructure.Persistence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Biblioteca.Application.Services.Implementations
 {
@@ -26,7 +21,7 @@ namespace Biblioteca.Application.Services.Implementations
             _dbContext?.Loans?.Add(loan);
 
             return loan.Id;
-        }        
+        }
 
         public LoanViewModel Get(int id)
         {

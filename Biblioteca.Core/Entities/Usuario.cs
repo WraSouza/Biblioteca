@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Biblioteca.Core.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,9 +13,21 @@ namespace Biblioteca.Core.Entities
         {
             Nome = nome;
             Email = email;
+            UserStatus = UserStatusEnum.Created;
+            LivrosEmprestados = new();
         }
 
         public string? Nome { get; private set; }
         public string? Email { get; private set; }
+        public UserStatusEnum UserStatus { get; private set; }
+        public List<Book> LivrosEmprestados { get; private set; }
+
+        public void Bloquear()
+        {
+            if(UserStatus == UserStatusEnum.Created)
+            {
+                UserStatus = UserStatusEnum.Blocked;
+            }
+        }
     }
 }

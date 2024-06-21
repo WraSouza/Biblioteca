@@ -3,16 +3,22 @@ using Biblioteca.Application.Services.Interfaces;
 using Biblioteca.Application.ViewModels;
 using Biblioteca.Core.Entities;
 using Biblioteca.Infrastructure.Persistence;
+using Dapper;
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 
 namespace Biblioteca.Application.Services.Implementations
 {
     public class BookService : IBookService
     {
         private readonly BibliotecaDbContext _bibliotecaDbContext;
+        private readonly string? _connectionString;
 
-        public BookService(BibliotecaDbContext bibliotecaDbContext)
+        public BookService(BibliotecaDbContext bibliotecaDbContext, IConfiguration configuration)
         {
             _bibliotecaDbContext = bibliotecaDbContext;
+
+            _connectionString = configuration.GetConnectionString("BibliotecaCs");
         }
 
         public int Create(InsertBookInputModel model)
@@ -36,12 +42,16 @@ namespace Biblioteca.Application.Services.Implementations
 
         public List<BookViewModel> GetAll()
         {
-            var books = _bibliotecaDbContext.Books;
+            using(var sqlConnection = new SqlConnection(_connectionString))
+            {
+                sqlConnection.Open();
 
-            var booksViewModel = books?
-                .Select(b =>  new BookViewModel(b.Titulo, b.Autor)).ToList();
+                var script = "SELECT Titulo, Autor FROM Books";
 
-            return booksViewModel;
+                return sqlConnection.Query<BookViewModel>(script).ToList();
+            }
+
+           
         }
 
         public BookViewModel GetById(int id)

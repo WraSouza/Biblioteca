@@ -1,5 +1,4 @@
 ﻿using Biblioteca.Application.InputModels;
-using Biblioteca.Application.Services.Implementations;
 using Biblioteca.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,9 +17,10 @@ namespace Biblioteca.API.Controllers
         public IActionResult GetAll()
         {
             var books = _bookService.GetAll();
+
             return Ok(books);
         }
-       
+
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
@@ -32,7 +32,12 @@ namespace Biblioteca.API.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] InsertBookInputModel insertBookModel)
         {
-            return Ok();
+            if (insertBookModel is null)
+                return BadRequest();
+
+            var id = _bookService.Create(insertBookModel);
+
+            return CreatedAtAction(nameof(GetById), new { id = id }, insertBookModel);
         }
 
         [HttpDelete("{id}")]
