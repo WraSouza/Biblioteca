@@ -1,4 +1,7 @@
-﻿using Biblioteca.Application.InputModels;
+﻿using Biblioteca.Application.Commands.UserCommands;
+using Biblioteca.Application.Queries.GetAllBooks;
+using Biblioteca.Application.Queries.GetAllUsers;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Biblioteca.API.Controllers
@@ -6,22 +9,37 @@ namespace Biblioteca.API.Controllers
     [Route("/api/usuarios")]
     public class UsuariosController : Controller
     {
-        [HttpGet]
-        public IActionResult GetAll()
+        private readonly IMediator _mediator;
+        public UsuariosController(IMediator mediator)
         {
-            return Ok();
+            _mediator = mediator;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var getAllUsers = new GetAllUsersQuery();
+
+            var allUsers = await _mediator.Send(getAllUsers);
+
+            return Ok(allUsers);
         }
 
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
             return Ok();
-        }      
+        }
 
         [HttpPost]
-        public IActionResult Post([FromBody] CreateUserInputModel model)
+        public async Task<IActionResult> Post([FromBody] InsertUserCommand command)
         {
-            return CreatedAtAction(nameof(GetById), new { id = model.Id }, model);
+            if (command is null)
+                return BadRequest();
+
+            var id = await _mediator.Send(command);
+
+            return CreatedAtAction(nameof(GetById), new { id = id }, command);
         }
 
         [HttpDelete("{id}")]

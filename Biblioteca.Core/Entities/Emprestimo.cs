@@ -1,9 +1,4 @@
 ﻿using Biblioteca.Core.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Biblioteca.Core.Entities
 {
@@ -27,7 +22,7 @@ namespace Biblioteca.Core.Entities
 
         public void SetAvailable()
         {
-            if(Status == BookStatusEnum.Busy)
+            if (Status == BookStatusEnum.Busy)
             {
                 Status = BookStatusEnum.Available;
             }

@@ -1,6 +1,11 @@
+using Biblioteca.Application.Commands.BookCommands;
+using Biblioteca.Application.Queries.GetAllBooks;
 using Biblioteca.Application.Services.Implementations;
 using Biblioteca.Application.Services.Interfaces;
+using Biblioteca.Core.DTOs;
+using Biblioteca.Core.Repositories;
 using Biblioteca.Infrastructure.Persistence;
+using Biblioteca.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +23,10 @@ options.UseSqlServer(connectionString));
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<ILoanService, LoanService>();
 builder.Services.AddScoped<IUsuarioService, UserService>();
+builder.Services.AddScoped<IBookRepository, BookRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddMediatR(cfg => { cfg.RegisterServicesFromAssemblies(typeof(InsertBookCommand).Assembly); });
+builder.Services.AddMediatR(cfg => { cfg.RegisterServicesFromAssemblies(typeof(BookDTO).Assembly); });
 
 var app = builder.Build();
 

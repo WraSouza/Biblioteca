@@ -1,5 +1,7 @@
-﻿using Biblioteca.Application.InputModels;
+﻿using Biblioteca.Application.Commands.BookCommands;
+using Biblioteca.Application.Queries.GetAllBooks;
 using Biblioteca.Application.Services.Interfaces;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Biblioteca.API.Controllers
@@ -8,15 +10,19 @@ namespace Biblioteca.API.Controllers
     public class BooksController : Controller
     {
         private readonly IBookService _bookService;
+        private readonly IMediator _mediator;
 
-        public BooksController(IBookService bookService)
+        public BooksController(IBookService bookService, IMediator mediator)
         {
             _bookService = bookService;
+            _mediator = mediator;
         }
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var books = _bookService.GetAll();
+            var getAllBooks = new GetAllBooksQuery();
+
+            var books = await _mediator.Send(getAllBooks);            
 
             return Ok(books);
         }
@@ -30,14 +36,14 @@ namespace Biblioteca.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] InsertBookInputModel insertBookModel)
+        public async Task<IActionResult> Post([FromBody] InsertBookCommand command)
         {
-            if (insertBookModel is null)
+            if (command is null)
                 return BadRequest();
+            
+            var id = await _mediator.Send(command);
 
-            var id = _bookService.Create(insertBookModel);
-
-            return CreatedAtAction(nameof(GetById), new { id = id }, insertBookModel);
+            return CreatedAtAction(nameof(GetById), new { id = id }, command);
         }
 
         [HttpDelete("{id}")]

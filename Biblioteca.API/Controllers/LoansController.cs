@@ -1,5 +1,9 @@
 ﻿using Biblioteca.Application.InputModels;
 using Biblioteca.Application.Services.Interfaces;
+using Biblioteca.Core.Entities;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Biblioteca.API.Controllers
@@ -8,9 +12,12 @@ namespace Biblioteca.API.Controllers
     public class LoansController : Controller
     {
         private readonly ILoanService _loanService;
-        public LoansController(ILoanService loanService)
+        private readonly IMediator _mediator;
+
+        public LoansController(ILoanService loanService, IMediator mediator)
         {
             _loanService = loanService;
+            _mediator = mediator;
         }
 
         [HttpGet]
@@ -27,7 +34,7 @@ namespace Biblioteca.API.Controllers
             return Ok();
         }
 
-        [HttpPost]
+        [HttpPost]       
         public IActionResult Post([FromBody] CreateLoanInputModel model)
         {
             return Ok();

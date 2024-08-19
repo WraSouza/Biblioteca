@@ -13,14 +13,12 @@ namespace Biblioteca.Core.Entities
         {
             Nome = nome;
             Email = email;
-            UserStatus = UserStatusEnum.Created;
-            LivrosEmprestados = new();
+            UserStatus = UserStatusEnum.Created;            
         }
 
         public string? Nome { get; private set; }
         public string? Email { get; private set; }
-        public UserStatusEnum UserStatus { get; private set; }
-        public List<Book> LivrosEmprestados { get; private set; }
+        public UserStatusEnum UserStatus { get; private set; }       
 
         public void Bloquear()
         {
