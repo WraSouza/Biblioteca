@@ -43,6 +43,9 @@ namespace Biblioteca.API.Controllers
             
             var id = await _mediator.Send(command);
 
+            if(id == 0)
+                return BadRequest("Livro Já Existe no Cadastro");
+
             return CreatedAtAction(nameof(GetById), new { id = id }, command);
         }
 

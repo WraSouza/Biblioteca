@@ -13,10 +13,19 @@ namespace Biblioteca.Application.Commands.BookCommands
         }
         public async Task<int> Handle(InsertBookCommand request, CancellationToken cancellationToken)
         {
-            var book = new Book(request.Titulo, request.Autor, request.Isbn, request.AnoPublicacao);
+            bool getAllBooks = await _bookRepository.BookExistsAsync(request.Titulo);
 
-            int id = _bookRepository.Create(book);
-            return id;
+            if (getAllBooks == false)
+            {
+                var book = new Book(request.Titulo, request.Autor, request.Isbn, request.AnoPublicacao);
+
+                int id = _bookRepository.Create(book);
+
+                return 1;
+
+            }
+
+            return 0;
         }
     }
 }

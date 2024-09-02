@@ -7,7 +7,8 @@ namespace Biblioteca.Core.Repositories
     {
         Task<List<BookDTO>> GetAll();
         BookDTO GetById(int id);
-        List<BookDTO> Get(string query);      
+        Task<BookDTO> Get(string query);      
         int Create(Book model);
+        Task<bool> BookExistsAsync(string  query);
     }
 }

@@ -1,6 +1,4 @@
-﻿using Biblioteca.Core.Enums;
-
-namespace Biblioteca.Core.DTOs
+﻿namespace Biblioteca.Core.DTOs
 {
     public class BookDTO
     {

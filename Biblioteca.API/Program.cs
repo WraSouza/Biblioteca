@@ -7,6 +7,7 @@ using Biblioteca.Core.Repositories;
 using Biblioteca.Infrastructure.Persistence;
 using Biblioteca.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,7 +36,15 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    //app.UseSwagger(options =>
+    //{
+    //    options.RouteTemplate = "openapi/{documentName}.json";
+    //});
+    //app.UseSwaggerUI();
+   
 }
+
+//app.MapScalarApiReference();
 
 app.UseHttpsRedirection();
 
