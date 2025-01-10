@@ -8,6 +8,6 @@ namespace Biblioteca.Core.Repositories
         Task<List<UserDTO>> GetAllUsersAsync();
         UserDTO GetById(int id);
         List<UserDTO> Get(string query);
-        int Create(Usuario model);
+        Task<int> CreateAsync(Usuario model);
     }
 }

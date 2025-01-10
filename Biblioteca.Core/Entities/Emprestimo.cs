@@ -4,14 +4,15 @@ namespace Biblioteca.Core.Entities
 {
     public class Emprestimo : BaseEntity
     {
-        public Emprestimo(int idUsuario, int idBook)
+        public Emprestimo(int idUsuario, int idBook, DateTime? dataDevolucao)
         {
             IdUsuario = idUsuario;
             IdBook = idBook;
 
             Status = BookStatusEnum.Available;
             DataEmprestimo = DateTime.Now;
-            DataDevolucao = DateTime.Now.AddDays(30);
+            DataDevolucao = dataDevolucao;
+            //DataDevolucao = DateTime.Now.AddDays(30);
         }
 
         public int IdUsuario { get; private set; }

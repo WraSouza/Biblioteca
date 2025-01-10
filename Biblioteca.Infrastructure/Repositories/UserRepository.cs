@@ -15,11 +15,11 @@ namespace Biblioteca.Infrastructure.Repositories
             _connectionString = configuration.GetConnectionString("BibliotecaCs"); ;
         }
 
-        public int Create(Usuario model)
+        public async Task<int> CreateAsync(Usuario model)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
-                connection.Open();
+                await connection.OpenAsync();
                 
                 var script = "INSERT INTO Usuarios (Nome, Email, UserStatus) VALUES (@Nome, @Email, @UserStatus)";
 
@@ -39,7 +39,7 @@ namespace Biblioteca.Infrastructure.Repositories
         {
             using (var connection = new SqlConnection(_connectionString))
             {
-                connection.Open();
+                await connection.OpenAsync();
 
                 var script = "SELECT Nome, Email, UserStatus FROM Usuarios";
 

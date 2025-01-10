@@ -1,32 +1,18 @@
-﻿using Biblioteca.Application.InputModels;
-using Biblioteca.Application.Services.Interfaces;
-using Biblioteca.Core.Entities;
+﻿using Biblioteca.Application.Commands.LoanCommand;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Biblioteca.API.Controllers
 {
     [Route("/api/loans")]
-    public class LoansController : Controller
+    public class LoansController(IMediator mediator) : Controller
     {
-        private readonly ILoanService _loanService;
-        private readonly IMediator _mediator;
-
-        public LoansController(ILoanService loanService, IMediator mediator)
-        {
-            _loanService = loanService;
-            _mediator = mediator;
-        }
 
         [HttpGet]
         public IActionResult GetAll()
         {
-            var loans = _loanService.GetAll();
-
-            return Ok(loans);
-        }       
+            return Ok();
+        }
 
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
@@ -34,9 +20,14 @@ namespace Biblioteca.API.Controllers
             return Ok();
         }
 
-        [HttpPost]       
-        public IActionResult Post([FromBody] CreateLoanInputModel model)
+        [HttpPost]
+        public async Task<IActionResult> PostAsync([FromBody] InsertLoanCommand command)
         {
+            if (command is null)
+                return BadRequest();
+
+            var id = await mediator.Send(command);
+
             return Ok();
         }
 

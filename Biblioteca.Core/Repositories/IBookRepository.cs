@@ -5,9 +5,9 @@ namespace Biblioteca.Core.Repositories
 {
     public interface IBookRepository
     {
-        Task<List<BookDTO>> GetAll();
+        Task<List<BookDTO>> GetAllAsync();
         BookDTO GetById(int id);
-        Task<BookDTO> Get(string query);      
+        Task<BookDTO> GetAsync(string query);      
         int Create(Book model);
         Task<bool> BookExistsAsync(string  query);
     }

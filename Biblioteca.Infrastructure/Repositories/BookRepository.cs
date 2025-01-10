@@ -41,7 +41,6 @@ namespace Biblioteca.Infrastructure.Repositories
                     return bookExists;
                 }
 
-
                 return bookExists;
             }
         }
@@ -60,7 +59,7 @@ namespace Biblioteca.Infrastructure.Repositories
             return model.Id;
         }
 
-        public async Task<BookDTO> Get(string query)
+        public async Task<BookDTO> GetAsync(string query)
         {
             BookDTO bookDTO = null;
 
@@ -82,7 +81,7 @@ namespace Biblioteca.Infrastructure.Repositories
             }
         }
 
-        public async Task<List<BookDTO>> GetAll()
+        public async Task<List<BookDTO>> GetAllAsync()
         {
             using (var sqlConnection = new SqlConnection(_connectionString))
             {

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Biblioteca.Application.ViewModels
+﻿namespace Biblioteca.Application.ViewModels
 {
     public class BookViewModel
     {
@@ -14,7 +8,7 @@ namespace Biblioteca.Application.ViewModels
             Autor = autor;
         }
 
-        public string? Titulo {  get; set; }
+        public string? Titulo { get; set; }
         public string? Autor { get; set; }
     }
 }
